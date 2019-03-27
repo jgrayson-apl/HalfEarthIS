@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- End Responsive -->
+    <link rel=icon href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+    <script src="./app/dojo.js"></script>
+    <script src="https://js.arcgis.com/4.11/"></script>
+    <script>require(["Application/init"]);</script>
+  </head>
+  <body class="configurable-application--loading">
+
+    <!-- DETAILS -->
+    <div class="js-modal modal-overlay" data-modal="app-details-dialog">
+      <div class="modal-content column-14" aria-labelledby="modal" role="dialog">
+        <span class="js-modal-toggle esri-interactive icon-ui-close right" aria-label="close-modal"></span>
+        <h3 class="trailer-half text-blue">Configurable Application</h3>
+        <div class="panel">
+          This application loads a web map or web scene and provides simple mapping capabilities via the ArcGIS API for JavaScript 4.x.
+        </div>
+        <div class="margin-left-2 leader-quarter">
+          This application is built using:
+          <ul>
+            <li>
+              <a href="https://developers.arcgis.com/javascript/" target="_blank">Esri ArcGIS API for Javascript 4.x</a>
+            </li>
+            <li>
+              <a href="https://github.com/Esri/application-base-js" target="_blank">Esri ApplicationBase</a>
+              <span>&nbsp;&&nbsp;</span>
+              <a href="https://github.com/Esri/configurable-app-examples-4x-js" target="_blank">Configurable App Example</a>
+            </li>
+            <li>
+              <a href="http://esri.github.io/calcite-web/" target="_blank">Esri Calcite Web Framework</a>
+            </li>
+          </ul>
+        </div>
+        <div class="leader-half">
+          <img src="./assets/esri_science_of_where.png" class="left">
+          <div class="text-right">
+            <button class="btn js-modal-toggle">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP SIDE DRAWER -->
+    <div id="map-side-drawer" class="drawer drawer-left js-drawer" data-drawer="top-nav" tabindex="0">
+      <nav class="drawer-nav" role="navigation">
+        <div class="panel panel-white panel-no-border">
+          <div id="current-map-card" class="card block margin-left-quarter margin-right-quarter">
+            <figure class="card-image-wrap">
+              <img id="current-map-card-thumb" class="card-image" src="" alt="">
+              <div id="current-map-card-caption" class="card-image-caption text-right font-size--3"></div>
+            </figure>
+            <div class="card-content">
+              <h4><a id="current-map-card-title" href="" target="_blank"></a></h4>
+              <p id="current-map-card-description" class="card-last font-size--3"></p>
+            </div>
+          </div>
+        </div>
+        <div id="layer-list-container"></div>
+        <div class="trailer-half">
+          <h2 class="side-nav-title">Social</h2>
+          <div class="text-center padding-leader-half">
+            <span class="icon-social-contact" aria-label="Email"></span>
+            <span class="icon-social-geonet" aria-label="GeoNet"></span>
+            <span class="icon-social-facebook" aria-label="Facebook"></span>
+            <span class="icon-social-twitter" aria-label="Twitter"></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- TOP NAVIGATION -->
+    <header id="header-panel" class="panel panel-blue panel-no-padding panel-no-border padding-left-1 padding-right-1">
+      <!-- APP TITLE -->
+      <span id="app-title-node" class="top-nav-title text-white"></span>
+      <!-- MAP AND CONTENT -->
+      <nav class="top-nav-list" role="navigation" aria-labelledby="topnav">
+        <span class="top-nav-link esri-interactive js-drawer-toggle text-white margin-left-3" data-drawer="top-nav">Map</span>
+      </nav>
+      <!-- RIGHT ALIGNED -->
+      <nav class="top-nav-list right" role="navigation">
+
+        <!-- SIGN IN NODE -->
+        <span id="sign-in-node" class="top-nav-link text-white esri-interactive icon-ui-user margin-left-1">Sign In</span>
+
+        <!-- USER NODE -->
+        <div id="user-node" class="dropdown js-dropdown margin-left-1 text-white hide">
+          <span class="top-nav-link icon-ui-user text-white margin-left-1 esri-interactive js-dropdown-toggle" tabindex="0" aria-haspopup="true" aria-expanded="false">
+            <span id="user-firstname-node"></span>
+          </span>
+          <nav class="dropdown-menu dropdown-right" role="menu">
+            <span class="dropdown-title">
+              <span id="user-fullname-node"></span>
+              <br>
+              <img id="user-thumb-node" src="">
+              <small><span id="username-node"></span></small>
+            </span>
+            <a href="https://developers.arcgis.com/community/support" target="_blank" class="dropdown-link icon-ui-support" role="menu-item">Support</a>
+            <a href="https://developers.arcgis.com/feedback/" target="_blank" class="dropdown-link icon-ui-link-external" role="menu-item">Feedback</a>
+            <span id="sign-out-node" class="dropdown-link esri-interactive icon-ui-sign-out" role="menu-item">Sign Out</span>
+          </nav>
+        </div>
+
+        <!-- APP DETAILS -->
+        <span class="top-nav-link icon-ui-description text-white js-modal-toggle margin-left-1 esri-interactive" data-modal="app-details-dialog"></span>
+
+      </nav>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div id="main-container">
+
+      <!-- LEFT CONTAINER -->
+      <div id="left-container" class="panel panel-white panel-no-border column-6">
+
+        <div class="panel panel-white panel-no-border">
+
+          <div class="font-size-1 text-blue trailer-half">Species Rarity Image Services</div>
+          <label class="toggle-switch text-center trailer-0">
+            <span class="toggle-switch-label font-size--1">Fishes</span>
+            <input id="layer-switch" type="checkbox" class="toggle-switch-input">
+            <span class="toggle-switch-track"></span>
+            <span class="toggle-switch-label font-size--1">Birds</span>
+          </label>
+
+          <div class="panel leader-half">
+            <label class="trailer-0">
+              <span class="text-blue trailer-quarter">Interpolation</span>
+              <select id="interpolation-select" class="select-full">
+                <option value="RSP_BilinearInterpolation">Bilinear Interpolation</option>
+                <option value="RSP_CubicConvolution">Cubic Convolution</option>
+                <option value="RSP_Majority">Majority</option>
+                <option value="RSP_NearestNeighbor">Nearest Neighbor</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="mosaic-rule-panel" class="panel leader-half">
+            <div class="font-size-0 text-blue">
+              <span>Mosaic Rule</span>
+              <a href="https://developers.arcgis.com/documentation/common-data-types/mosaic-rules.htm" target="_blank" class="icon-ui-link-external right" title="MosaicRule - REST API"></a>
+              <a href="https://jscore.esri.com/javascript/latest/api-reference/esri-layers-support-MosaicRule.html" target="_blank" class="icon-ui-link-external right" title="MosaicRule - JS API"></a>
+            </div>
+            <pre id="mosaic-rule-node" class="font-size--3 trailer-0"></pre>
+          </div>
+
+          <div id="rendering-rule-panel" class="panel leader-half">
+            <div class="font-size-0 text-blue">
+              <span>Rendering Rule</span>
+              <a href="https://developers.arcgis.com/documentation/common-data-types/color-ramp-objects.htm" target="_blank" class="icon-ui-link-external right" title="Color ramp - REST API"></a>
+              <a href="https://developers.arcgis.com/documentation/common-data-types/raster-function-objects.htm#GUID-5DDFC961-A857-445F-A983-13AF67D45833" target="_blank" class="icon-ui-link-external right" title="Colormap -Raster Function - REST API"></a>
+              <a href="https://developers.arcgis.com/documentation/common-data-types/raster-function-objects.htm#ESRI_SECTION1_7545363F0B8A4B7B931A54B3C4189D9D" target="_blank" class="icon-ui-link-external right" title="Stretch - Raster Function - REST API"></a>
+              <a href="https://developers.arcgis.com/documentation/common-data-types/raster-function-objects.htm#ESRI_SECTION1_7545363F0B8A4B7B931A54B3C4189D9D" target="_blank" class="icon-ui-link-external right" title="RasterFunction - REST API"></a>
+              <a href="https://jscore.esri.com/javascript/latest/api-reference/esri-layers-support-RasterFunction.html" target="_blank" class="icon-ui-link-external right" title="RasterFunction - JS API"></a>
+            </div>
+            <pre id="rendering-rule-node" class="font-size--3 trailer-0"></pre>
+          </div>
+
+        </div>
+
+        <div class="panel panel-white leader-half">
+          <div class="font-size-0 text-blue trailer-half">
+            <span>Custom Rendering Rule</span>
+          </div>
+          <div class="panel">
+            <div class="hide">Stretch options here...</div>
+            <label class="toggle-switch text-center trailer-0">
+              <span class="toggle-switch-label font-size--1">Statistics</span>
+              <input id="dra-switch" type="checkbox" class="toggle-switch-input">
+              <span class="toggle-switch-track"></span>
+              <span class="toggle-switch-label font-size--1">DRA</span>
+            </label>
+          </div>
+          <div id="custom-rendering-rule-panel" class="panel leader-half">
+            <label class="trailer-half hide">
+              <span>Algorithm</span>
+              <select id="ramp-algorithm-select">
+                <option value="esriHSVAlgorithm" selected>HSV</option>
+                <option value="esriCIELabAlgorithm">CIELab</option>
+                <option value="esriLabLChAlgorithm">LabLCh</option>
+              </select>
+            </label>
+            <label class="trailer-half">
+              <span>From Color</span>
+              <div id="from-color-node" class="color-node" data-clr="#FCE723"></div>
+            </label>
+            <label class="trailer-half">
+              <span>To Color</span>
+              <div id="to-color-node" class="color-node" data-clr="#430154"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW CONTAINER -->
+      <div id="view-container"></div>
+
+      <!-- RIGHT CONTAINER -->
+      <div id="right-container" class="panel panel-white panel-no-border column-6">
+        <div class="font-size-1 text-blue trailer-half">
+          Calculate Statistics
+          <a href="https://developers.arcgis.com/rest/services-reference/compute-statistics-and-histograms.htm" target="_blank" class="icon-ui-link-external right"></a>
+        </div>
+        <div class="panel">
+          <div class="font-size-0 text-blue trailer-half">
+            <span>Area of Interest</span>
+          </div>
+
+          <label class="toggle-switch margin-left-1">
+            <span class="toggle-switch-label font-size--1">Display Mask</span>
+            <input id="mask-switch" type="checkbox" class="toggle-switch-input">
+            <span class="toggle-switch-track"></span>
+          </label>
+
+          <label class="trailer-quarter margin-left-1">
+            <span>User Defined</span>
+            <button id="create-aoi-btn" class="btn btn-fill btn-disabled" title="Click-n-drag a circle on the map...">Sketch Area of Interest</button>
+          </label>
+          <label class="trailer-half margin-left-1">
+            <span>Countries</span>
+            <select id="country-select" class="select-full btn-disabled"></select>
+          </label>
+          <label class="trailer-half margin-left-1">
+            <span>Protected Areas</span>
+            <button id="select-protected-area-btn" class="btn btn-fill btn-disabled" title="Click on a protected area...">Select Protected Area</button>
+            <!--<select id="protected-areas-select" class="select-full">
+              <option value="random">...list of protected area names here...</option>
+            </select>-->
+          </label>
+        </div>
+        <div class="panel leader-half">
+          <div class="font-size-0 text-blue">
+            <span>Statistics</span>
+            <span id="clear-statistics-node" class="icon-ui-close esri-interactive right" title="Clear statistics..."></span>
+          </div>
+          <pre id="statistics-node" class="font-size--3 trailer-0"></pre>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

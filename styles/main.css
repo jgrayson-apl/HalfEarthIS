@@ -1,0 +1,257 @@
+html,
+body {
+  margin                   : 0;
+  padding                  : 0;
+  width                    : 100%;
+  height                   : 100%;
+  font-size                : 100%;
+  -webkit-text-size-adjust : 100%;
+  -moz-text-size-adjust    : 100%;
+  -ms-text-size-adjust     : 100%;
+  overflow                 : auto;
+}
+
+body * {
+  outline : none;
+}
+
+.configurable-application--loading {
+  text-align : center;
+  display    : block;
+  height     : 100%;
+  width      : 100%;
+  overflow   : hidden;
+  background : #fff url(../assets/loader-ie9.gif) no-repeat center center;
+}
+
+#header-panel {
+  z-index    : 99;
+  box-shadow : 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+#main-container {
+  margin         : 0;
+  padding        : 0;
+  height         : 100%;
+  width          : 100%;
+  display        : flex;
+  flex-direction : row;
+}
+
+#left-container,
+#right-container {
+  flex-shrink    : 0;
+  flex-grow      : 0;
+  display        : flex;
+  flex-direction : column;
+}
+
+#left-container > .panel,
+#right-container > .panel {
+  flex-shrink : 1;
+  flex-grow   : 1;
+}
+
+#right-container > .panel pre {
+  max-height       : 250px;
+  overflow         : auto;
+  padding          : 5px;
+  background-color : #fff;
+}
+
+#left-container > .panel pre {
+  max-height       : 100px;
+  overflow         : auto;
+  padding          : 5px;
+  background-color : #fff;
+}
+
+#view-container {
+  flex-shrink : 1;
+  flex-grow   : 1;
+  margin      : 0;
+  padding     : 0;
+  background  : #bcdaed;
+}
+
+#mosaic-rule-panel {
+  flex-shrink : 1;
+  flex-grow   : 1;
+  overflow-x  : hidden;
+  overflow-y  : auto;
+}
+
+#rendering-rule-panel {
+  flex-shrink : 1;
+  flex-grow   : 1;
+  overflow-x  : hidden;
+  overflow-y  : auto;
+}
+
+#item-list-container {
+  flex-shrink    : 1;
+  flex-grow      : 200;
+  display        : flex;
+  flex-direction : column;
+}
+
+#left-bottom-panel {
+  flex-shrink : 1;
+  flex-grow   : 1;
+}
+
+#item-list {
+  flex-shrink : 1;
+  flex-grow   : 1;
+  overflow    : auto;
+}
+
+#item-list:empty {
+  text-align : center;
+  padding    : 2em 0;
+  font-style : italic;
+  color      : silver;
+}
+
+#item-list:empty:after {
+  content : "Loading items...";
+}
+
+.zoom-node {
+  opacity    : 0.0;
+  transition : opacity 0.5s linear;
+}
+
+.item-node:hover .zoom-node {
+  opacity    : 1.0;
+  transition : opacity 1s linear;
+}
+
+#user-thumb-node {
+  height         : 36px;
+  border-radius  : 18px;
+  vertical-align : middle;
+}
+
+.top-nav-link:hover, .top-nav-link:focus {
+  color               : #fff;
+  border-bottom-color : #fff;
+}
+
+#map-side-drawer,
+#map-side-drawer .drawer-nav {
+  display        : flex;
+  flex-direction : column;
+}
+
+#map-side-drawer .drawer-nav > :nth-child(1) {
+  flex-shrink : 0;
+  flex-grow   : 0;
+}
+
+#map-side-drawer .drawer-nav > :nth-child(2) {
+  flex-shrink : 1;
+  flex-grow   : 1;
+  overflow-y  : scroll;
+  overflow-x  : hidden;
+}
+
+#map-side-drawer .drawer-nav > :nth-child(3) {
+  flex-shrink : 0;
+  flex-grow   : 0;
+}
+
+.esri-layer-list__item-actions-menu-item:hover,
+.esri-layer-list__item-actions-menu-item--active,
+.esri-layer-list__item-actions-menu-item--active:hover {
+  color            : #0079c1 !important;
+  background-color : transparent !important;
+}
+
+.esri-widget--button {
+  color            : #fff !important;
+  background-color : #0079c1 !important;
+}
+
+.drawer-nav {
+  width : 350px;
+}
+
+.view-loading-node {
+  box-shadow : none !important;
+}
+
+.view-loading-node .loader-text {
+  color       : #fff;
+  padding-top : 3em !important;
+}
+
+.side-nav-link:last-of-type {
+  border-bottom : solid 1px #efefef;
+}
+
+.panel-toggle {
+  z-index    : 99;
+  position   : absolute;
+  cursor     : pointer;
+  top        : calc(50% - 15px);
+  left       : 0;
+  padding    : 4px 0;
+  background : #fff;
+  /*box-shadow : 0 1px 2px rgba(0, 0, 0, 0.3);*/
+}
+
+.panel-toggle:hover {
+  color : #0079c1;
+}
+
+.pane-toggle-target {
+  transition : width 0.5s linear, padding 0.5s linear, opacity 0.5s linear 0.5s;
+}
+
+.pane-toggle-source {
+  transition : width 0.5s 1s linear;
+}
+
+.pane-toggle-target.collapsed {
+  opacity    : 0.0 !important;
+  padding    : 0 !important;
+  width      : 0 !important;
+  transition : opacity 0.5s linear, padding 0.5s linear 0.5s, width 0.5s linear 0.5s;
+}
+
+.pane-toggle-source.expanded {
+  width      : 100% !important;
+  transition : width 0.5s 1s linear;
+}
+
+#custom-rendering-rule-panel label {
+  display        : flex;
+  flex-direction : row;
+  align-items    : center;
+  align-self     : center;
+  justify-items  : center;
+}
+
+#custom-rendering-rule-panel label span {
+  text-align     : right;
+  margin-right   : 10px;
+  width          : 120px;
+  vertical-align : middle;
+}
+
+.color-node {
+  cursor           : pointer;
+  width            : 1.5rem;
+  height           : 1.5rem;
+  background-color : #fff;
+  box-shadow       : 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+#from-color-node {
+  background-color : #FCE723;
+}
+
+#to-color-node {
+  background-color : #430154;
+}

@@ -1,0 +1,27 @@
+{
+  "title": "Half Earth Image Services",
+  "appid": "",
+  "group": "",
+  "webmapX": "a9d88c50551d49f6bc93eda1014d3b5a",
+  "webscene": "b942ae58039d4030b9055bf2f33a7959",
+  "portalUrl": "https://www.arcgis.com",
+  "oauthappid": "hrFP8yDGOiGFx4ub",
+  "proxyUrl": "https://apl.esri.com/proxy/DotNet/proxy.ashx",
+  "units": "dual",
+  "helperServices": {
+    "geometry": {
+      "url": null
+    },
+    "printTask": {
+      "url": null
+    },
+    "elevationSync": {
+      "url": null
+    },
+    "geocode": [
+      {
+        "url": null
+      }
+    ]
+  }
+}
